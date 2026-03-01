@@ -79,7 +79,7 @@
       animation: float 6s ease-in-out infinite;
       opacity: 0.8;
     }
-    .balloon::before {
+.balloon::before {
       content: "";
       position: absolute;
       bottom: -8px;
@@ -88,6 +88,38 @@
       width: 2px;
       height: 20px;
       background: #888;
+    }
+    .small-balloon {
+      position: absolute;
+      width: 20px;
+      height: 25px;
+      background: #87ceeb;
+      border-radius: 50%;
+      animation: floatSmall 5s ease-in-out infinite;
+      opacity: 0.7;
+    }
+    .small-balloon::before {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 10px;
+      background: #888;
+    }
+    @keyframes floatSmall {
+      0%,100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(-2deg); }
+    }
+    .cow {
+      position: absolute;
+      font-size: 24px;
+      animation: floatCow 7s ease-in-out infinite;
+    }
+    @keyframes floatCow {
+      0%,100% { transform: translateY(0) rotate(-5deg); }
+      50% { transform: translateY(-30px) rotate(5deg); }
     }
 @keyframes float {
       0%,100% { transform: translateY(0) rotate(0deg); }
@@ -194,7 +226,7 @@
       }
     }
 
-    // 随机飘气球
+// 随机飘大气球
     function createBalloon() {
       const body = document.body
       const balloon = document.createElement('div')
@@ -205,7 +237,32 @@
       body.appendChild(balloon)
       setTimeout(()=>{balloon.remove()}, 10000)
     }
-    setInterval(createBalloon, 1200)
+    // 随机飘小气球
+    function createSmallBalloon() {
+      const body = document.body
+      const balloon = document.createElement('div')
+      balloon.classList.add('small-balloon')
+      balloon.style.left = Math.random() * 100 + 'vw'
+      balloon.style.background = `hsl(${Math.random()*360}, 70%, 60%)`
+      balloon.style.animationDuration = (3 + Math.random() * 4) + 's'
+      body.appendChild(balloon)
+      setTimeout(()=>{balloon.remove()}, 8000)
+    }
+    // 随机飘牛表情包
+    function createCow() {
+      const body = document.body
+      const cows = ['🐮', '🐃', '🐄', '🐂']
+      const cow = document.createElement('div')
+      cow.className = 'cow'
+      cow.textContent = cows[Math.floor(Math.random() * cows.length)]
+      cow.style.left = Math.random() * 100 + 'vw'
+      cow.style.animationDuration = (5 + Math.random() * 5) + 's'
+      body.appendChild(cow)
+      setTimeout(()=>{cow.remove()}, 12000)
+    }
+    setInterval(createBalloon, 1500)
+    setInterval(createSmallBalloon, 800)
+    setInterval(createCow, 2000)
   </script>
 </body>
 </html>
